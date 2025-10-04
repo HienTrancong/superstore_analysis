@@ -1,0 +1,16 @@
+# Ignore editor settings
+.vscode/
+
+# Ignore helper Excel files in data/
+data/*helper*.xls
+
+# Ignore OS junk files
+.DS_Store
+Thumbs.db
+
+# Python cache (if you add notebooks/scripts later)
+__pycache__/
+*.py[cod]
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
