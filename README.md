@@ -1,2 +1,31 @@
 # superstore_analysis
+
 Data analysis and visualization of the Tableau Superstore dataset using SQL and Tableau.
+
+
+## Objectives
+
+
+## Data
+ [Tableau Sample – Superstore](https://public.tableau.com/app/resources/sample-data)
+
+## Technologies
+**SQL** - data cleaning, joins, calculations, and KPI modeling  
+**Tableau** – dashboard creation and visual exploration  
+**Excel** – initial data inspection and export  
+
+## Process
+
+| Step | Phase | Goal | Deliverable |
+|------|--------|------|--------------|
+| 1️⃣ | **Load data** | Get Superstore data into PostgreSQL | `stg_orders`, `stg_returns`, `stg_people` tables |
+| 2️⃣ | **Clean & prepare** | Remove duplicates, handle nulls, standardize columns | `01_staging_cleaning.sql` |
+| 3️⃣ | **Model data** | Create fact and mart tables for analysis | `fact_sales`, `mart_sales_returns` |
+| 4️⃣ | **Analyze** | Write KPI queries (Sales, Margin, Returns) | `03_analysis_queries.sql` |
+| 5️⃣ | **Visualize** | Connect Tableau and build dashboards | Tableau Public dashboard |
+| 6️⃣ | **Document** | Summarize results and insights | `README.md`, screenshots |
+
+
+## Outputs
+
+
