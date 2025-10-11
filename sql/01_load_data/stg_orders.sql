@@ -23,7 +23,7 @@ CREATE TABLE stg_orders (
 	profit NUMERIC
 );
 COPY stg_orders
-FROM 'D:\\Portfolio\\superstore\\sql\\Orders.csv' WITH (
+FROM 'D:\\Portfolio\\superstore\\data\\Orders.csv' WITH (
 		FORMAT csv,
 		HEADER true,
 		DELIMITER ',',
@@ -33,3 +33,6 @@ FROM 'D:\\Portfolio\\superstore\\sql\\Orders.csv' WITH (
 	);
 SELECT *
 FROM stg_orders;
+SELECT *
+FROM stg_orders
+LIMIT 1;
