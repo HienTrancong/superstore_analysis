@@ -1,33 +1,23 @@
 -- See how many rows
-SELECT COUNT(*)
-FROM stg_orders;
-SELECT COUNT(*)
-FROM stg_returns;
-SELECT COUNT(*)
-FROM stg_people;
+SELECT COUNT(*) FROM stg_orders;
+SELECT COUNT(*) FROM stg_returns;
+SELECT COUNT(*) FROM stg_people;
+
 -- Preview first rows
-SELECT *
-FROM stg_orders
-LIMIT 10;
-SELECT *
-FROM stg_returns
-LIMIT 10;
-SELECT *
-FROM stg_people
-LIMIT 10;
+SELECT * FROM stg_orders LIMIT 10;
+SELECT * FROM stg_returns LIMIT 10;
+SELECT * FROM stg_people LIMIT 10;
+
 -- Inspect columns, data types
-SELECT column_name,
-  data_type
+SELECT column_name, data_type
 FROM information_schema.columns
 WHERE table_name = 'stg_orders';
 
-SELECT column_name,
-  data_type
+SELECT column_name, data_type
 FROM information_schema.columns
 WHERE table_name = 'stg_returns';
 
-SELECT column_name,
-  data_type
+SELECT column_name, data_type
 FROM information_schema.columns
 WHERE table_name = 'stg_people';
 
@@ -87,12 +77,9 @@ FROM stg_returns;
 SELECT
   CASE WHEN order_id      LIKE ' %' OR order_id      LIKE '% ' THEN 'Y' END AS space_order_id,
   CASE WHEN returned     LIKE ' %' OR returned     LIKE '% ' THEN 'Y' END AS space_ship_mode
-
   FROM stg_returns
   WHERE order_id      LIKE ' %' OR order_id      LIKE '% '
     OR returned    LIKE ' %' OR returned     LIKE '% '
-;
-
 ;
 
 SELECT
@@ -138,11 +125,13 @@ SELECT order_date, ship_date
   FROM stg_orders
   WHERE 
     order_date IS NULL OR order_date::text !~ '^\d{4}-\d{2}-\d{2}$' OR
-    ship_date IS NULL OR ship_date::text !~ '^\d{4}-\d{2}-\d{2}$' OR
+    ship_date IS NULL OR ship_date::text !~ '^\d{4}-\d{2}-\d{2}$'
 ;
 
+-- Check data range and outlier
 SELECT MIN(sales), MAX(sales)
-FROM stg_orders;
+  FROM stg_orders
+;
 
 SELECT
   order_id,
@@ -163,3 +152,44 @@ SELECT
   PERCENTILE_CONT(0.99) WITHIN GROUP (ORDER BY sales) AS p99_sales,
   MAX(sales) AS max_sales
 FROM stg_orders;
+
+-- Create clean tables
+
+DROP TABLE IF EXISTS clean_orders;
+CREATE TABLE clean_orders AS
+  SELECT  row_id,
+    order_id,
+    order_date,
+    ship_date,
+    ship_mode,
+    customer_id,
+    customer_name,
+    segment,
+    country,
+    city,
+    state,
+    postal_code,
+    region,
+    product_id,
+    category,
+    sub_category,
+    TRIM(product_name) AS product_name,
+    sales,
+    quantity,
+    discount,
+    profit
+  FROM stg_orders
+;
+
+DROP TABLE IF EXISTS clean_returns;
+CREATE TABLE clean_returns AS
+  SELECT * FROM stg_returns
+;
+
+DROP TABLE IF EXISTS clean_people;
+CREATE TABLE clean_people AS
+  SELECT * FROM stg_people
+;
+
+
+
