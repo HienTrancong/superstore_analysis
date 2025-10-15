@@ -28,10 +28,26 @@ Performed data cleaning and validation in `01_staging_cleaning.sql`:<br>
   - No missing or duplicate records in key fields
 - **Create clean tables:** `clean_orders`, `clean_returns`, `clean_people`
 
-**3. Model data** Create fact and mart tables for analysis `fact_sales`, `mart_sales_returns`<br>
+**3. Model data** <br>
+- Create fact tables for analysis `fact_sales`<br>
 - **Derive fields**:
-  - `cost` = '
-**4. Analyze** Write KPI queries (Sales, Margin, Returns) `03_analysis_queries.sql`<br>
+  - `cost` = `sales - profit`
+  - `margin` = `profit / sales`
+  - `unit_price` = `sales / quantity`
+  - `gross_sales` = `sales / (1 - discount)`
+  - `gross_unit_price` = `(sales / (1 - discount)) / quantity`
+
+**4. Analyze** <br>
+- Product performance
+  - Top product by sales
+  - Top category by return rate
+  - Top country by sales growth YoY
+- Shipping performance
+  - Processing time by ship mode
+- Time Series analysis
+  - YoY sales, profit, margin summary by category
+  - MoM sales seasonality
+  
 **5. Visualize** Connect Tableau and build dashboards | Tableau Public dashboard <br>
 **6. Document** | Summarize results and insights | `README.md`, screenshots <br>
 
