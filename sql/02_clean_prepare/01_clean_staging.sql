@@ -70,9 +70,19 @@ SELECT COUNT(*) - COUNT(DISTINCT row_id) AS dup_row_id,
   COUNT(*) - COUNT(DISTINCT region) AS dup_region,
   COUNT(*) - COUNT(DISTINCT segment) AS dup_segment
 FROM stg_orders;
-SELECT COUNT(*) - COUNT(DISTINCT returned) AS dup_returned,
+
+
+SELECT 
+  COUNT(*) - COUNT(DISTINCT returned) AS dup_returned,
   COUNT(*) - COUNT(DISTINCT order_id) AS dup_order_id
 FROM stg_returns;
+
+-- Are there returns pointing to missing orders?
+SELECT COUNT(*) AS orphan_returns
+FROM clean_returns r
+LEFT JOIN clean_orders o ON r.order_id = o.order_id
+WHERE o.order_id IS NULL;
+
 -- Check space
 SELECT
   CASE WHEN order_id      LIKE ' %' OR order_id      LIKE '% ' THEN 'Y' END AS space_order_id,
@@ -118,6 +128,7 @@ SELECT product_id,
     '"' || product_name || '"' AS visible_name
   FROM stg_orders
   WHERE product_name LIKE '% '
+  ORDER BY 1
 ;
 
 -- Check date type

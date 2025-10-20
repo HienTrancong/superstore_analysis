@@ -39,9 +39,12 @@ Performed data cleaning and validation in `01_staging_cleaning.sql`:<br>
 
 **4. Analyze** <br>
 - Product performance
-  - Top product by sales
-  - Top category by return rate
+  - Top 5 product by sales
+    - Using `ROW_NUMBER()` for top-N
+  - Top subcategory by return rate
+    - *Return rate (quantity based) = return_quantity / total_quantity*
   - Top country by sales growth YoY
+    - Using `LAG()` for previous year(s) comparisons
 - Shipping performance
   - Processing time by ship mode
 - Time Series analysis
